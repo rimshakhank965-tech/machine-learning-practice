@@ -1,0 +1,5 @@
+# Cap RUL at 125 cycles 
+train["RUL_capped"] = train["RUL"].clip(upper=125) 
+
+print(train[["unit", "cycle", "RUL",             
+"RUL_capped"]].head(20))
