@@ -1,0 +1,24 @@
+def health_score(rul):   
+    if rul >= 70:        
+        return 100    
+    elif rul <= 0:      
+        return 0  
+    else:       
+        return (rul / 70.0) * 100 
+
+train["health_score"] = train["RUL_capped"].apply(health_score)
+
+def health_status(score):    
+    if score > 70:        
+        return "HEALTHY"    
+    elif score >= 40:       
+        return "WARNING"   
+    else:       
+        return "CRITICAL" 
+
+train["health_status"] = train["health_score"].apply(   
+    health_status
+)
+
+print(train[["unit", "cycle", "RUL_capped",            
+             "health_score", "health_status"]].head(20))
