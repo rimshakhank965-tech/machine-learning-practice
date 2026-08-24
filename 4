@@ -1,0 +1,4 @@
+sensor = "sensor_11" 
+train["sensor_11_diff"] = (    
+    train.groupby("unit")[sensor].diff().fillna(0)
+)
