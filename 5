@@ -1,0 +1,20 @@
+sensor = "sensor_11"
+train["sensor_11_diff"] = (    
+train.groupby("unit")[sensor].diff().fillna(0)
+)
+
+train["sensor_11_roll_mean"] = (    
+    train.groupby("unit")[sensor]         
+         .transform(lambda x: x.rolling(10, min_periods=1).mean()) 
+) 
+
+train["sensor_11_roll_std"] = (    
+    train.groupby("unit")[sensor]         
+         .transform(lambda x: x.rolling(10, min_periods=1).std())         
+         .fillna(0)
+) 
+
+print(train[["unit", "cycle", sensor,            
+             "sensor_11_diff",            
+             "sensor_11_roll_mean",            
+             "sensor_11_roll_std"]].head(20))
