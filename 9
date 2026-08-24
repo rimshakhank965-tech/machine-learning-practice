@@ -1,0 +1,20 @@
+def maintenance_action(rul, health, anomaly):  
+    if anomaly == "ANOMALY" or health < 40 or rul <= 20:       
+        return "MAINTENANCE REQUIRED"  
+    elif health <= 70 or rul <= 50:        
+        return "SCHEDULE INSPECTION"   
+    else:       
+        return "NORMAL MONITORING"
+        
+train["maintenance_action"] = train.apply(   
+    lambda row: maintenance_action(        
+        row["RUL_capped"],       
+        row["health_score"],        
+        row["anomaly_status"]  
+     ),    
+     axis=1
+)
+     
+print(train[["unit", "cycle", "RUL_capped",            
+             "health_score", "anomaly_status",             
+             "maintenance_action"]].head(20))
