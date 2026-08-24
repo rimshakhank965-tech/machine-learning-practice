@@ -1,0 +1,23 @@
+from sklearn.ensemble import IsolationForest 
+
+features = ["sensor_2", "sensor_3", "sensor_4",              
+            "sensor_7", "sensor_11", "sensor_12"] 
+            
+anomaly_model = IsolationForest(    
+     contamination=0.05, random_state=42
+) 
+
+anomaly_model.fit(train[features]) 
+
+train["anomaly_prediction"] = anomaly_model.predict(   
+    train[features]
+)
+
+train["anomaly_status"] = train["anomaly_prediction"].map({   
+    1: "NORMAL",    
+    -1: "ANOMALY"
+})
+
+print(train[["unit", "cycle",            
+             "anomaly_prediction",            
+             "anomaly_status"]].head(20))
