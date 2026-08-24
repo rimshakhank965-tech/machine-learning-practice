@@ -1,0 +1,8 @@
+max_cycle = train.groupby("unit")["cycle"].max() 
+train["max_cycle"] = train["unit"].map(max_cycle) 
+
+train["RUL"] = train["max_cycle"] - train["cycle"] 
+
+train.drop("max_cycle", axis=1, inplace=True) 
+
+print(train[["unit", "cycle", "RUL"]].head(20))
